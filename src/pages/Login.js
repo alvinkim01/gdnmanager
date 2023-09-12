@@ -28,29 +28,28 @@ const Login = () => {
  
     return(
         <>
-            <main >        
-                <section>
-                    <div>                                            
-                        <h1><p> GDN Cloud Login </p></h1>                       
-                                                       
-                        <form 
-                              style={{
-                                margin :"auto",
-                                padding :"15px",
-                                maxWidth :"400px",
-                                alignContent : "center"
-                              }}>                                              
+            <main >  
+                <section>      
+                    <div style={{ textAlign: "center" }}>
+                        <h1><p> GDN Cloud Login </p></h1>
+                            <form
+                            style={{
+                                margin: "auto",
+                                padding: "15px",
+                                maxWidth: "400px",
+                                alignContent: "center"
+                            }}>
                             <div>
                                 <label htmlFor="email-address">
-                                    Email address
+                                Email address
                                 </label>
                                 <input
-                                    id="email-address"
-                                    name="email"
-                                    type="email"                                    
-                                    required                                                                                
-                                    placeholder="Email address"
-                                    onChange={(e)=>setEmail(e.target.value)}
+                                id="email-address"
+                                name="email"
+                                type="email"
+                                required
+                                placeholder="Email address"
+                                onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
 

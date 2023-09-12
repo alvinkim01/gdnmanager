@@ -68,7 +68,7 @@ const Home = () => {
     const filterData = (value) =>{
         fireDB
         .child("contacts")
-        .orderByChild("status")
+        .orderByChild("done")
         .equalTo(value)
         .on ("value",(snapshot) =>{
             if(snapshot.val()) {
@@ -90,6 +90,7 @@ const Home = () => {
    
     return(
         <div style={{ marginTop: "100px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <h1><p> GDN Cloud 고객 온라인 미팅 관리 </p></h1>
                 <table className="styled-table">
                     <thead>
                         <tr>
@@ -98,7 +99,8 @@ const Home = () => {
                             <th style={{textAlign :"center"}}>Email</th>
                             <th style={{textAlign :"center"}}>Mobile</th>
                             <th style={{textAlign :"center"}}>Order</th>
-                            {!sort && <th style={{textAlign :"center"}}>Action</th>}
+                            <th style={{textAlign :"center"}}>Status</th>
+                            {!sort && <th style={{textAlign :"center"}}>Done</th>}
                         </tr>
                     </thead>
                     {!sort &&(
@@ -111,6 +113,7 @@ const Home = () => {
                                         <td>{data[id].email}</td>
                                         <td>{data[id].mobile}</td>
                                         <td>{data[id].order}</td>
+                                        <td>{data[id].done}</td>
                                         <td>
                                             <Link to={`/update/${id}`}>
                                             <button className="btn btn-edit">Edit</button>
@@ -136,6 +139,7 @@ const Home = () => {
                                         <td>{item.email}</td>
                                         <td>{item.mobile}</td>
                                         <td>{item.order}</td>
+                                        <td>{item.status}</td>
                                     </tr>
                                 );
                             })}
@@ -144,23 +148,24 @@ const Home = () => {
                 </table>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
                     <label>Sort By:</label>
-                    <select className="dropdown" name="colValue" onChange={handleChange}>
-                        <option>Please Select</option>
+                    <select className="dropdown" name="colValue" onChange={handleChange} style={{ width: "200px" }}>
+                        <option value="" disabled selected hidden>Please Select</option>
                         <option value="name">Name</option>
                         <option value="email">Email</option>
                         <option value="mobile">Mobile</option>
                         <option value="order">order</option>
                     </select>
+
                     <button className="btn btn-reset" onClick={handleReset}>
                         Reset
                     </button>
                     <br />
                 </div>
-                {/* <div style={{ display: "flex" }}>
+                <div style={{ display: "flex" }}>
                     <label style={{ marginRight: "10px" }}>Status:</label>
-                    <button className="btn btn-active" onClick={() => filterData("Active")}>Active</button>
-                    <button className="btn btn-inactive" onClick={() => filterData("InActive")}>InActive</button>
-                </div> */}
+                    <button className="btn btn-active" onClick={() => filterData("Done")}>처리</button>
+                    <button className="btn btn-inactive" onClick={() => filterData("NotDone")}>미처리</button>
+                </div>
                 <div>
                     <button className="btn btn-reset" onClick={handleLogout}>
                         Logout

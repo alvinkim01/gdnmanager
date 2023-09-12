@@ -9,15 +9,15 @@ const initialState = {
     name : "",
     email :"",
     mobile :"",
-    order :""
+    order :"",
+    done :""  
 }
 
 const AddEdit = () =>{
-    const [state,setState] = useState(initialState);
-    // const [data,setData] =({});
-    const [data,setData] = useState({});
+  const [state, setState] = useState(initialState);
+ const [data, setData] = useState({});
 
-    const { name,email,mobile,order} =state;
+    const { name,email,mobile,order,done} =state;
 
     const navigate = useNavigate();
 
@@ -36,17 +36,14 @@ const AddEdit = () =>{
         };
     },[id]);
 
-    useEffect(() =>{
-        if(id){
-            setState({...data[id]});
-        } else{
-            setState({...initialState});
-        }
-
-        return ()=>{
-            setState({...initialState});
-        };
-    },[id,data]);
+    useEffect(() => {
+      if (id && data[id]) {
+        setState({ ...data[id] });
+      } else {
+        setState({ ...initialState });
+      }
+    }, [id, data]);
+    
 
     // const history = useHistory();
     const handleInputChange = (e)=>{
@@ -58,32 +55,32 @@ const AddEdit = () =>{
         //이 때, [name]은 input 요소의 name 속성 값이고, value는 해당 input 요소의 값(value)
     };
     const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!name || !email || !mobile || !order) {
-          toast.error("Please provide value in each input field");
-        } else {
-            if(!id){
-                fireDB.child("contacts").push(state, (err) => {
-                    if (err) {
-                      toast.error(err);
-                    } else {
-                      toast.success("Contact Added Successfully");                      
-                    }
-                  });
+      e.preventDefault();
+      if (!name || !email || !mobile || !order) {
+        toast.error("Please provide value in each input field");
+      } else {
+        if (!id) {
+          fireDB.child("contacts").push(state, (err) => {
+            if (err) {
+              toast.error(err);
             } else {
-                fireDB.child(`contacts/${id}`).set(state, (err) => {
-                    if (err) {
-                      toast.error(err);
-                    } else {
-                      toast.success("Contact Updated Successfully");
-                      
-                    }
-                  });  
+              toast.success("Contact Added Successfully");
+              navigate('/home', { replace: true });
             }
-            // setTimeout(() => navigate.push("/"), 500); // 추가된 데이터가 Firebase에 반영된 후에 실행됩니다. 
-            setTimeout(() => navigate('/home', { replace: true }), 500);      
+          });
+        } else {
+          fireDB.child(`contacts/${id}`).set(state, (err) => {
+            if (err) {
+              toast.error(err);
+            } else {
+              toast.success("Contact Updated Successfully");
+              navigate('/home', { replace: true });
+            }
+          });
         }
-      };      
+      }
+    };
+    
     
     return(
         <div style={{marginTop :"100px"}}>
@@ -132,6 +129,17 @@ const AddEdit = () =>{
                   value={order || ""}
                   onChange={handleInputChange}
                 />
+                <label htmlFor="done">Done</label>
+                <select
+                  id="done"
+                  name="done"
+                  value={done || ""}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select Status</option>
+                  <option value="Done">Done</option>
+                  <option value="NotDone">Not Done</option>
+                </select>
                 <input type="submit" value={id?"Update":"Save"} />
                 
             </form>

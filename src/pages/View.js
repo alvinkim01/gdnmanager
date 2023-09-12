@@ -47,6 +47,10 @@ import "./View.css";
                         <span>{user.order}</span>
                         <br/>
                         <br/>
+                        <string><h3>Status:</h3></string>
+                        <span>{user.done}</span>
+                        <br/>
+                        <br/>
                         <Link to="/home">
                             <button className="btn btn-edit">Go Back</button>
                         </Link>
