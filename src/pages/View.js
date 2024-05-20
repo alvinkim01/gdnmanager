@@ -23,7 +23,7 @@ import "./View.css";
                 });
         },[id]);
 
-        console.log("user",user);
+        // console.log("user",user);
 
         return(
             <div style={{marginTop :"150px"}}>
@@ -32,7 +32,10 @@ import "./View.css";
                         <p>User Contact Detail</p>
                     </div>
                     <div className="container">
-                   
+                        <string><h3>Company:</h3></string>
+                        <span>{user.company}</span>
+                        <br/>
+                        <br/>
                         <string><h3>Name:</h3></string>
                         <span>{user.name}</span>
                         <string><h3>Email:</h3></string>
@@ -43,7 +46,7 @@ import "./View.css";
                         <span>{user.mobile}</span>
                         <br/>
                         <br/>
-                        <string><h3>Online Meeting Date:</h3></string>
+                        <string><h3>문의사항외:</h3></string>
                         <span>{user.order}</span>
                         <br/>
                         <br/>
